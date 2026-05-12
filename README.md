@@ -1,42 +1,51 @@
-# sv
+# Watchlist
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Watchlist is a small SvelteKit app for saving movies you want to watch.
 
-## Creating a project
+## MVP
 
-If you're seeing this, you've probably already done this step. Congrats!
+The first version supports:
+
+- Email/password registration and login.
+- A protected home page for signed-in users.
+- Adding movies by title.
+- Viewing your own saved movie titles.
+- Signing out.
+
+## Environment
+
+Create a `.env` file with:
 
 ```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-pnpm dlx sv@0.15.3 create --template minimal --types ts --add prettier eslint vitest="usages:unit,component" playwright sveltekit-adapter="adapter:netlify" drizzle="database:postgresql+postgresql:neon" better-auth="demo:password" --install pnpm .
+DATABASE_URL=...
+BETTER_AUTH_SECRET=...
+ORIGIN=http://localhost:5173
 ```
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
 ```sh
+npm install
+npm run db:migrate
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## Database
 
-To create a production version of your app:
+Schema changes are defined in `src/lib/server/db/schema.ts`.
 
 ```sh
+npm run db:generate
+npm run db:migrate
+```
+
+Use migrations for schema changes instead of `db:push`.
+
+## Verification
+
+```sh
+npm run check
+npm run lint
+npm run test:unit -- --run
 npm run build
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

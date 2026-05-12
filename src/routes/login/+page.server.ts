@@ -1,20 +1,20 @@
 import { fail, redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
-import type { PageServerLoad } from './$types';
-import { auth } from '$lib/server/auth';
+import type { Actions, PageServerLoad } from './$types';
 import { APIError } from 'better-auth/api';
+import { auth } from '$lib/server/auth';
 
 export const load: PageServerLoad = (event) => {
 	if (event.locals.user) {
-		return redirect(302, '/demo/better-auth');
+		return redirect(302, '/');
 	}
+
 	return {};
 };
 
 export const actions: Actions = {
 	signInEmail: async (event) => {
 		const formData = await event.request.formData();
-		const email = formData.get('email')?.toString() ?? '';
+		const email = formData.get('email')?.toString().trim() ?? '';
 		const password = formData.get('password')?.toString() ?? '';
 
 		try {
@@ -22,23 +22,24 @@ export const actions: Actions = {
 				body: {
 					email,
 					password,
-					callbackURL: '/auth/verification-success'
+					callbackURL: '/'
 				}
 			});
 		} catch (error) {
 			if (error instanceof APIError) {
-				return fail(400, { message: error.message || 'Signin failed' });
+				return fail(400, { message: error.message || 'Sign in failed' });
 			}
+
 			return fail(500, { message: 'Unexpected error' });
 		}
 
-		return redirect(302, '/demo/better-auth');
+		return redirect(302, '/');
 	},
 	signUpEmail: async (event) => {
 		const formData = await event.request.formData();
-		const email = formData.get('email')?.toString() ?? '';
+		const email = formData.get('email')?.toString().trim() ?? '';
 		const password = formData.get('password')?.toString() ?? '';
-		const name = formData.get('name')?.toString() ?? '';
+		const name = formData.get('name')?.toString().trim() ?? '';
 
 		try {
 			await auth.api.signUpEmail({
@@ -46,16 +47,17 @@ export const actions: Actions = {
 					email,
 					password,
 					name,
-					callbackURL: '/auth/verification-success'
+					callbackURL: '/'
 				}
 			});
 		} catch (error) {
 			if (error instanceof APIError) {
 				return fail(400, { message: error.message || 'Registration failed' });
 			}
+
 			return fail(500, { message: 'Unexpected error' });
 		}
 
-		return redirect(302, '/demo/better-auth');
+		return redirect(302, '/');
 	}
 };
