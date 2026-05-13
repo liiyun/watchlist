@@ -48,7 +48,13 @@
 		{#if data.movies.length > 0}
 			<ul>
 				{#each data.movies as movie (movie.id)}
-					<li>{movie.title}</li>
+					<li>
+						<span class="movie-title">{movie.title}</span>
+						<form method="post" action="?/deleteMovie" use:enhance>
+							<input type="hidden" name="movieId" value={movie.id} />
+							<button type="submit" class="delete-btn">Delete</button>
+						</form>
+					</li>
 				{/each}
 			</ul>
 		{:else}
@@ -114,9 +120,38 @@
 	}
 
 	li {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
 		padding: 1rem 1.15rem;
 		font-size: 1.05rem;
 		font-weight: 650;
+	}
+
+	.movie-title {
+		min-width: 0;
+		flex: 1;
+	}
+
+	li form {
+		margin: 0;
+		flex-shrink: 0;
+	}
+
+	.delete-btn {
+		padding: 0.4rem 0.75rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: #b91c1c;
+		background: #fef2f2;
+		border: 1px solid #fecaca;
+		border-radius: 0.5rem;
+		cursor: pointer;
+	}
+
+	.delete-btn:hover {
+		background: #fee2e2;
 	}
 
 	li + li {
