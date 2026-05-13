@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Clapperboard from '@lucide/svelte/icons/clapperboard';
+	import LogIn from '@lucide/svelte/icons/log-in';
+	import UserPlus from '@lucide/svelte/icons/user-plus';
 	import type { ActionData } from './$types';
 
 	let { form }: { form: ActionData } = $props();
@@ -12,7 +15,12 @@
 <main class="login-page">
 	<section class="intro" aria-labelledby="login-heading">
 		<p class="eyebrow">Movie night, organized</p>
-		<h1 id="login-heading">Watchlist</h1>
+		<div class="title-row">
+			<span class="title-icon" aria-hidden="true">
+				<Clapperboard size={40} strokeWidth={1.75} />
+			</span>
+			<h1 id="login-heading">Watchlist</h1>
+		</div>
 		<p>Log in or register to start saving movies you want to watch.</p>
 	</section>
 
@@ -33,8 +41,14 @@
 		</label>
 
 		<div class="actions">
-			<button>Log in</button>
-			<button class="secondary" formaction="?/signUpEmail">Register</button>
+			<button type="submit" class="primary-with-icon">
+				<LogIn size={20} strokeWidth={2} aria-hidden="true" />
+				Log in
+			</button>
+			<button class="secondary with-icon" type="submit" formaction="?/signUpEmail">
+				<UserPlus size={20} strokeWidth={2} aria-hidden="true" />
+				Register
+			</button>
 		</div>
 	</form>
 
@@ -55,8 +69,24 @@
 		max-width: 34rem;
 	}
 
+	.title-row {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+	}
+
+	.title-row h1 {
+		line-height: 1;
+	}
+
+	.title-icon {
+		display: flex;
+		color: var(--accent, #2563eb);
+		flex-shrink: 0;
+	}
+
 	.eyebrow {
-		color: #2563eb;
+		color: var(--accent, #2563eb);
 		font-size: 0.8rem;
 		font-weight: 750;
 		letter-spacing: 0.12em;
@@ -66,11 +96,11 @@
 	.auth-card {
 		display: grid;
 		gap: 1rem;
-		border: 1px solid rgba(148, 163, 184, 0.26);
+		border: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.26));
 		border-radius: 1.35rem;
-		background: rgba(255, 255, 255, 0.86);
+		background: var(--surface, rgba(255, 255, 255, 0.86));
 		padding: clamp(1rem, 4vw, 1.5rem);
-		box-shadow: 0 1rem 2.75rem rgba(15, 23, 42, 0.08);
+		box-shadow: 0 1rem 2.75rem var(--shadow-card, rgba(15, 23, 42, 0.08));
 	}
 
 	.actions {
@@ -80,20 +110,23 @@
 		padding-top: 0.25rem;
 	}
 
-	.secondary {
-		background: #e7ecf4;
-		color: #172033;
+	.primary-with-icon,
+	.with-icon {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
 	}
 
-	.secondary:hover {
-		background: #dbe2ee;
+	.primary-with-icon :global(svg),
+	.with-icon :global(svg) {
+		flex-shrink: 0;
 	}
 
 	.notice {
-		border: 1px solid #bfdbfe;
+		border: 1px solid var(--notice-border, #bfdbfe);
 		border-radius: 0.9rem;
-		background: #eff6ff;
-		color: #1d4ed8;
+		background: var(--notice-bg, #eff6ff);
+		color: var(--notice-text, #1d4ed8);
 		padding: 0.85rem 1rem;
 	}
 
@@ -101,6 +134,11 @@
 		.actions,
 		.actions button {
 			width: 100%;
+		}
+
+		.primary-with-icon,
+		.with-icon {
+			justify-content: center;
 		}
 	}
 </style>

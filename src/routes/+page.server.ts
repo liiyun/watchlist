@@ -20,7 +20,6 @@ export const load: PageServerLoad = async (event) => {
 		.orderBy(desc(movie.createdAt));
 
 	return {
-		user: event.locals.user,
 		movies
 	};
 };

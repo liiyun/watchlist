@@ -25,6 +25,7 @@
 		"@better-auth/cli": "~1.4.21",
 		"@eslint/compat": "^2.0.4",
 		"@eslint/js": "^10.0.1",
+		"@lucide/svelte": "^1.14.0",
 		"@neondatabase/serverless": "^1.0.2",
 		"@playwright/test": "^1.59.1",
 		"@sveltejs/adapter-netlify": "^6.0.4",

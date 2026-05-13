@@ -25,6 +25,7 @@ isProject: false
 ## Scope
 
 Implement only:
+
 - Email/password login and registration using the existing Better Auth setup.
 - A protected home page where the signed-in user can add movie titles.
 - A minimal list showing only that user's saved movie titles.
@@ -35,6 +36,7 @@ Do not add search, posters, ratings, notes, delete/edit, watched state, external
 ## Current Foundation
 
 Use the existing auth and database wiring:
+
 - [`src/lib/server/auth.ts`](/Users/liiyang/development/watchlist/src/lib/server/auth.ts) already enables Better Auth email/password with the Drizzle adapter.
 - [`src/hooks.server.ts`](/Users/liiyang/development/watchlist/src/hooks.server.ts) already loads the session and sets `event.locals.user`.
 - [`src/lib/server/db/index.ts`](/Users/liiyang/development/watchlist/src/lib/server/db/index.ts) already exports the Drizzle client.
@@ -90,16 +92,19 @@ export const task = pgTable('task', {
 ## Verification
 
 Run:
+
 - `npm run check`
 - `npm run lint`
 - `npm run test:unit -- --run`
 - `npm run build`
 
 If a database is available locally, also run:
+
 - `npm run db:generate`
 - `npm run db:migrate`
 
 Manual smoke test:
+
 - Register a user.
 - Sign out.
 - Sign in again.
